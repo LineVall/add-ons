@@ -1,0 +1,3 @@
+#!/bin/bash
+
+byobu attach-session -t unsa

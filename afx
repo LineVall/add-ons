@@ -1,0 +1,52 @@
+#!/bin/bash
+
+export __src_dir=$PWD
+export __repo_dir=$__src_dir/.repo
+export __out_dir=$__src_dir/out/target/product/rosy
+
+export AFTERLIFE_MAINTAINER=aepranata
+export AFTERLIFE_GAPPS=true
+export GAPPS_CORE=true
+export GAPPS_EXTRA=true
+#export GAPPS_BASIC=true
+#export GAPPS_FULL=true
+#export SELINUX_IGNORE_NEVERALLOWS=true
+export IS_PERMISSIVE=1
+
+export __tg_id="-1001834737844"
+export __tg_token="5478001056:AAFXt9jrRlb54Ttx_OtGaZ7NqNCWci_bw4o"
+
+if [ ! -d $__src_dir ]; then
+  mkdir -p $__src_dir
+fi
+
+cd $__src_dir
+#echo $PWD
+#if [ -d $__repo_dir ]; then
+#  rm -rf $__repo_dir/manifest*
+#fi
+
+#repo init --depth=1 --no-repo-verify -u https://gitlab.com/AtigaOS/manifest.git -b 1.0 -g default,-mips,-darwin,-notdefault
+
+#repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
+
+rm -rf out/
+source build/envsetup.sh
+lunch afterlife_rosy-userdebug
+#make installclean
+export CCACHE_EXEC=/usr/bin/ccache
+export USE_CCACHE=1
+ccache -o compression_level=1
+ccache -o max_size=8G
+ccache -z
+m afterlife -j$(nproc --all)
+
+export __file_zip=$__out_dir/AfterLife*.zip
+
+if [ ! -f $__file_zip ]; then
+  if [ -f $__src_dir/out/error.log ]; then
+    curl -F document=@"out/error.log" "https://api.telegram.org/bot${__tg_token}/sendDocument?chat_id=${__tg_id}"
+  fi
+else
+  rclone copy $__file_zip aepmega:testing/ -P
+fi

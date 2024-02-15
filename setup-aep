@@ -1,0 +1,7 @@
+#!/bin/bash
+
+git config user.name "Aditya Eka Pranata"
+git config user.email aepranata@gmail.com
+git config user.signingKey E30381674E65C06A
+git config commit.gpgSign true
+git config core.editor vim

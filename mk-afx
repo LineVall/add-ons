@@ -1,0 +1,3 @@
+#!/bin/bash
+
+byobu new-session -s afx
