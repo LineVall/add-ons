@@ -1,0 +1,12 @@
+clone into bin and .ssh
+
+jalankan
+
+- echo $PATH ( save hasilnya )
+- Edit ~/.bashrc
+- Add export PATH=$HOME/bin:<hasil-output-tadi>
+- source ~/.bashrc
+
+Buat masuk tanpa password
+
+ssh-copy-id -i ~/.ssh/id_ed25519.pub ip

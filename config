@@ -1,0 +1,21 @@
+# Github
+Host github-aeposs
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519-unsa
+
+# Gitlab
+Host gitlab-aeposs
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+
+Host gitlab.com
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519-unsa
